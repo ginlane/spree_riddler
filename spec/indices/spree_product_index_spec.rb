@@ -1,11 +1,21 @@
 require 'spec_helper'
-require 'support/sphinx_environment'
 
 describe "Spree::Product Index" do
-  sphinx_environment :spree_products do
-    before :each do
-      # index some shit, yo.
-    end
-    it "should index some shit. Yo."
+  before :all do
+    ThinkingSphinx::Test.start
+  end
+
+  after :all do
+    ThinkingSphinx::Test.stop
+  end
+
+  before :each do
+    FactoryGirl.create :product, name: "Fnord"
+  end
+
+  it "should index some shit. Yo." do
+
+    Spree::Product.should be_indexed
+
   end
 end

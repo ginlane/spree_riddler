@@ -1,29 +1,19 @@
+require "thinking_sphinx"
 require "thinking_sphinx/test"
 
-def sphinx_environment(*tables, &block)
-  obj = self
-  begin
-    before :all do
-      obj.use_transactional_fixtures = false
-      DatabaseCleaner.strategy = :truncation, only: tables
-      ThinkingSphinx::Test.create_indexes_folder
-      ThinkingSphinx::Test.start
-    end
+module SphinxHelpers
+  def create_index(klass)
+    ThinkingSphinx::Test.index "#{klass.name.underscore.gsub('/','_')}_core"
+  end
+end
 
-    before :each do
-      DatabaseCleaner.start
-    end
-
-    after :each do
-      DatabaseCleaner.clean
-    end
-
-    yield
-  ensure
-    after :all do
-      ThinkingSphinx::Test.stop
-      DatabaseCleaner.strategy = :transaction
-      obj.use_transactional_fixtures = true
-    end
+RSpec::Matchers.define :be_indexed do
+  match do |actual|
+    result = create_index actual
+    result !~ /ERROR/
+  end
+  failure_message_for_should do |actual|
+    message = create_index actual
+    "Expected index not to fail. Message was:\n\n#{message}"
   end
 end

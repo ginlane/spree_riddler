@@ -4,6 +4,10 @@ module SpreeRiddler
 
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
+      def add_sphinx_tasks
+        prepend_file 'Rakefile', "require 'thinking_sphinx/tasks'"
+      end
+
       def add_javascripts
         append_file 'app/assets/javascripts/store/all.js', "//= require store/spree_riddler\n"
         append_file 'app/assets/javascripts/admin/all.js', "//= require admin/spree_riddler\n"

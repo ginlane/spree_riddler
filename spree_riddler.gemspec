@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 2.1.3'
+  s.add_dependency 'thinking-sphinx', '~> 3.0.6'
+  s.add_dependency 'mysql2'
 
   s.add_development_dependency 'capybara', '~> 2.1'
   s.add_development_dependency 'coffee-rails'
@@ -32,5 +34,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'guard'
   s.add_development_dependency 'guard-rspec'
-  s.add_development_dependency 'mocha'
+  # s.add_development_dependency 'mocha'
 end
