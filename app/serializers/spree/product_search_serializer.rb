@@ -1,3 +1,4 @@
+require 'active_model_serializers'
 class Spree::ProductSearchSerializer < ::ActiveModel::Serializer
   attributes :id, :name, :description, :thumbnail, :url
   attr_accessor :controller
