@@ -7,13 +7,29 @@ module SphinxHelpers
   end
 end
 
-RSpec::Matchers.define :be_indexed do
+RSpec::Matchers.define :be_searchable_with do |expected|
   match do |actual|
-    result = create_index actual
-    result !~ /ERROR/
+    !actual.search(expected).empty?
   end
   failure_message_for_should do |actual|
-    message = create_index actual
-    "Expected index not to fail. Message was:\n\n#{message}"
+    "No instances of #{actual} found in the index with query: #{expected.inspect}"
+  end
+end
+
+RSpec::Matchers.define :be_universally_searchable_with do |expected|
+  match do |actual|
+    !ThinkingSphinx.search(expected).empty?
+  end
+  failure_message_for_should do |actual|
+    "No instances of #{actual} found in the index with query: #{expected.inspect}"
+  end
+end
+
+RSpec::Matchers.define :be_indexed do
+  match do |actual|
+    ThinkingSphinx::Test.config.indices.map(&:model).include? actual
+  end
+  failure_message_for_should do |actual|
+    "Expected indices to include at least one entry for #{actual}"
   end
 end

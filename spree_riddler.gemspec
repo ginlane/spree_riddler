@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree_core', '~> 2.1.3'
   s.add_dependency 'thinking-sphinx', '~> 3.0.6'
   s.add_dependency 'mysql2'
+  s.add_dependency 'active_model_serializers', "~>0.8.0"
 
   s.add_development_dependency 'capybara', '~> 2.1'
   s.add_development_dependency 'coffee-rails'

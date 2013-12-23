@@ -4,8 +4,13 @@ module SpreeRiddler
 
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
-      def add_sphinx_tasks
-        prepend_file 'Rakefile', "require 'thinking_sphinx/tasks'"
+      def add_sphinx_config
+        create_file "config/thinking_sphinx.yml", <<-EOS
+development:
+  address: localhost
+test:
+  address: localhost
+        EOS
       end
 
       def add_javascripts
